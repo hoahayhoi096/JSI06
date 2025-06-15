@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Thời tiết HCM</title>
+</head>
+<body>
+  <h1>Thời tiết hiện tại ở TP. Hồ Chí Minh</h1>
+  <div id="weather"></div>
+
+  <script>
+    const apiKey = "be552729ee3e00a92023a8837e539370";
+    const city = "Ho Chi Minh";
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=vi`;
+    
+    fetch(url)
+          .then(response => response.json())
+          .then(data => {
+            
+            const weatherDiv = document.getElementById("weather");
+            
+            weatherDiv.innerHTML = `
+              <p><strong>Nhiệt độ:</strong> ${data.main.temp}°C</p>
+              <p><strong>Thời tiết:</strong> ${data.weather[0].description}</p>
+              <p><strong>Độ ẩm:</strong> ${data.main.humidity}%</p>
+              <p><strong>Tốc độ gió:</strong> ${data.wind.speed} m/s</p>
+            `;
+
+
+          })
+          .catch(error => {
+            console.error("Lỗi:", error);
+            document.getElementById("weather").innerText = "Không thể lấy dữ liệu thời tiết.";
+          });
+    
+  </script>
+
+  
+</body>
+</html>
